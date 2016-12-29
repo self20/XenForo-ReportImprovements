@@ -133,6 +133,21 @@ class SV_ReportImprovements_XenForo_Model_Report extends XFCP_SV_ReportImproveme
         return $comments;
     }
 
+    public function flagVisibleReportsForUser(array $reports, array $viewingUser = null)
+    {
+        $reports = parent::flagVisibleReportsForUser($reports, $viewingUser);
+
+        foreach($reports as $key => $report)
+        {
+            if (empty($report['isVisible']))
+            {
+                unset($reports[$key]);
+            }
+        }
+
+        return $reports;
+    }
+
     public function getReportCommentsIdsInRange($start, $limit)
     {
         $db = $this->_getDb();
